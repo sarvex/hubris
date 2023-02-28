@@ -12,6 +12,7 @@ use crate::front_io::FrontIOBoard;
 use crate::tofino::Tofino;
 use drv_fpga_api::{DeviceState, FpgaError, WriteOp};
 use drv_i2c_api::{I2cDevice, ResponseCode};
+use drv_sidecar_mainboard_controller::fan_modules::*;
 use drv_sidecar_mainboard_controller::tofino2::*;
 use drv_sidecar_mainboard_controller::MainboardController;
 use drv_sidecar_seq_api::{SeqError, TofinoSequencerPolicy};
@@ -95,6 +96,7 @@ struct ServerImpl {
     clock_generator: ClockGenerator,
     tofino: Tofino,
     front_io_board: FrontIOBoard,
+    fan_modules: FanModules,
 }
 
 impl idl::InOrderSequencerImpl for ServerImpl {
@@ -398,6 +400,12 @@ impl idl::InOrderSequencerImpl for ServerImpl {
             .map_err(SeqError::from)
             .map_err(RequestError::from)
     }
+
+    fn fan_presence(&mut self) -> Result<[Bool; 4], FpgaError> {
+        self.fan_modules.state()?.map(|s| s.present())?
+    }
+
+    fn update_thermal_loop(&mut self, state: FanModuleState) {}
 }
 
 impl NotificationHandler for ServerImpl {
@@ -425,6 +433,8 @@ impl NotificationHandler for ServerImpl {
         let next_deadline = finish + TIMER_INTERVAL - (delta % TIMER_INTERVAL);
 
         sys_set_timer(Some(next_deadline), notifications::TIMER_MASK);
+
+        // fan module monitoring code
     }
 }
 
@@ -441,12 +451,14 @@ fn main() -> ! {
         I2C.get_task_id(),
         AUXFLASH.get_task_id(),
     );
+    let fan_modules = FanModules::new(MAINBOARD.get_task_id());
 
     let mut server = ServerImpl {
         mainboard_controller,
         clock_generator,
         tofino,
         front_io_board,
+        fan_modules,
     };
 
     ringbuf_entry!(Trace::FpgaInit);

@@ -11,6 +11,8 @@ pub struct IgnitionController {
     fpga: FpgaUserDesign,
 }
 
+const IGNITION_CONTROLLERS_COUNT: u16 = 35;
+
 impl IgnitionController {
     pub fn new(task_port: userlib::TaskId) -> Self {
         Self {
@@ -23,7 +25,7 @@ impl IgnitionController {
 
     #[inline]
     fn port_addr(&self, port: u8, offset: Addr) -> u16 {
-        u16::from(MainboardControllerAddr::IGNITION_CONTROLLERS_COUNT)
+        u16::from(IGNITION_CONTROLLERS_COUNT)
             + 0x100
             + (0x100 * u16::from(port))
             + u16::from(offset)
@@ -58,16 +60,16 @@ impl IgnitionController {
     /// Return the number of ports exposed by the Controller.
     #[inline]
     pub fn port_count(&self) -> Result<u8, FpgaError> {
-        self.fpga
-            .read(MainboardControllerAddr::IGNITION_CONTROLLERS_COUNT)
+        self.fpga.read(IGNITION_CONTROLLERS_COUNT)
     }
 
     /// Return a bit-vector indicating Target presence on each of the Controller
     /// ports.
     #[inline]
     pub fn presence_summary(&self) -> Result<u64, FpgaError> {
-        self.fpga
-            .read(MainboardControllerAddr::IGNITION_TARGETS_PRESENT0)
+        // self.fpga
+        //     .read(MainboardControllerAddr::IGNITION_TARGETS_PRESENT0)
+        Ok(0)
     }
 
     /// Return the state for the given port.

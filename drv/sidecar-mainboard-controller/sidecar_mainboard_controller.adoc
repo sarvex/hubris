@@ -154,6 +154,66 @@ Scratchpad
 |[7:0] | rw | SCRATCHPAD | Scribble Register for read-write use
 |===
 
+Fan 0 State
+[caption="Address: "]
+.0x0020 - FAN0_STATE Register
+[cols=4,options="header"]
+|===
+| Bits | SW Access | Name | Function
+|[7:6] |  | - | Reserved
+|[5] | r | PG_TIMED_OUT | FANx_HSC_TO_FPGA_PG was not released within timeout period.
+|[4] | r | POWER_FAULT | PG was lost during normal operation.
+|[3] | r | PG | Value of FANx_HSC_TO_FPGA_PG.
+|[2] | r | PRESENT | Debounced value of FANx_TO_FPGA_PRESENT_2V5.
+|[1] | rw | LED | Drives FPGA_TO_FANx_LED_L (not actually active low).
+|[0] | rw | ENABLE | Drives FPGA_TO_FANx_HSC_EN. FPGA will clear if FANx_PRESENT not set.
+|===
+
+Fan 1 State
+[caption="Address: "]
+.0x0021 - FAN1_STATE Register
+[cols=4,options="header"]
+|===
+| Bits | SW Access | Name | Function
+|[7:6] |  | - | Reserved
+|[5] | r | PG_TIMED_OUT | FANx_HSC_TO_FPGA_PG was not released within timeout period.
+|[4] | r | POWER_FAULT | PG was lost during normal operation.
+|[3] | r | PG | Value of FANx_HSC_TO_FPGA_PG.
+|[2] | r | PRESENT | Debounced value of FANx_TO_FPGA_PRESENT_2V5.
+|[1] | rw | LED | Drives FPGA_TO_FANx_LED_L (not actually active low).
+|[0] | rw | ENABLE | Drives FPGA_TO_FANx_HSC_EN. FPGA will clear if FANx_PRESENT not set.
+|===
+
+Fan 2 State
+[caption="Address: "]
+.0x0022 - FAN2_STATE Register
+[cols=4,options="header"]
+|===
+| Bits | SW Access | Name | Function
+|[7:6] |  | - | Reserved
+|[5] | r | PG_TIMED_OUT | FANx_HSC_TO_FPGA_PG was not released within timeout period.
+|[4] | r | POWER_FAULT | PG was lost during normal operation.
+|[3] | r | PG | Value of FANx_HSC_TO_FPGA_PG.
+|[2] | r | PRESENT | Debounced value of FANx_TO_FPGA_PRESENT_2V5.
+|[1] | rw | LED | Drives FPGA_TO_FANx_LED_L (not actually active low).
+|[0] | rw | ENABLE | Drives FPGA_TO_FANx_HSC_EN. FPGA will clear if FANx_PRESENT not set.
+|===
+
+Fan 3 State
+[caption="Address: "]
+.0x0023 - FAN3_STATE Register
+[cols=4,options="header"]
+|===
+| Bits | SW Access | Name | Function
+|[7:6] |  | - | Reserved
+|[5] | r | PG_TIMED_OUT | FANx_HSC_TO_FPGA_PG was not released within timeout period.
+|[4] | r | POWER_FAULT | PG was lost during normal operation.
+|[3] | r | PG | Value of FANx_HSC_TO_FPGA_PG.
+|[2] | r | PRESENT | Debounced value of FANx_TO_FPGA_PRESENT_2V5.
+|[1] | rw | LED | Drives FPGA_TO_FANx_LED_L (not actually active low).
+|[0] | rw | ENABLE | Drives FPGA_TO_FANx_HSC_EN. FPGA will clear if FANx_PRESENT not set.
+|===
+
 Tofino Sequencer Control
 [caption="Address: "]
 .0x0100 - TOFINO_SEQ_CTRL Register
@@ -374,87 +434,6 @@ Tofino Debug Port Status
 |[2] | r | RECEIVE_BUFFER_EMPTY | Receive buffer empty
 |[1] | r | SEND_BUFFER_FULL | Send buffer full
 |[0] | r | SEND_BUFFER_EMPTY | Send buffer empty
-|===
-
-Ignition Controllers Count
-[caption="Address: "]
-.0x0300 - IGNITION_CONTROLLERS_COUNT Register
-[cols=4,options="header"]
-|===
-| Bits | SW Access | Name | Function
-|[7:0] | r | COUNT | The number of present/active Ignition Controllers
-|===
-
-Ignition Targets Present 0
-[caption="Address: "]
-.0x0301 - IGNITION_TARGETS_PRESENT0 Register
-[cols=4,options="header"]
-|===
-| Bits | SW Access | Name | Function
-|[7:0] | r | PRESENT_SUMMARY0 | Byte 0 of Ignition Target Present summary
-|===
-
-Ignition Targets Present 1
-[caption="Address: "]
-.0x0302 - IGNITION_TARGETS_PRESENT1 Register
-[cols=4,options="header"]
-|===
-| Bits | SW Access | Name | Function
-|[7:0] | r | PRESENT_SUMMARY1 | Byte 1 of Ignition Target Present summary
-|===
-
-Ignition Targets Present 2
-[caption="Address: "]
-.0x0303 - IGNITION_TARGETS_PRESENT2 Register
-[cols=4,options="header"]
-|===
-| Bits | SW Access | Name | Function
-|[7:0] | r | PRESENT_SUMMARY2 | Byte 2 of Ignition Target Present summary
-|===
-
-Ignition Targets Present 3
-[caption="Address: "]
-.0x0304 - IGNITION_TARGETS_PRESENT3 Register
-[cols=4,options="header"]
-|===
-| Bits | SW Access | Name | Function
-|[7:0] | r | PRESENT_SUMMARY3 | Byte 3 of Ignition Target Present summary
-|===
-
-Ignition Targets Present 4
-[caption="Address: "]
-.0x0305 - IGNITION_TARGETS_PRESENT4 Register
-[cols=4,options="header"]
-|===
-| Bits | SW Access | Name | Function
-|[7:0] | r | PRESENT_SUMMARY4 | Byte 4 of Ignition Target Present summary
-|===
-
-Ignition Targets Present 5
-[caption="Address: "]
-.0x0306 - IGNITION_TARGETS_PRESENT5 Register
-[cols=4,options="header"]
-|===
-| Bits | SW Access | Name | Function
-|[7:0] | r | PRESENT_SUMMARY5 | Byte 5 of Ignition Target Present summary
-|===
-
-Ignition Targets Present 6
-[caption="Address: "]
-.0x0307 - IGNITION_TARGETS_PRESENT6 Register
-[cols=4,options="header"]
-|===
-| Bits | SW Access | Name | Function
-|[7:0] | r | PRESENT_SUMMARY6 | Byte 6 of Ignition Target Present summary
-|===
-
-Ignition Targets Present 7
-[caption="Address: "]
-.0x0308 - IGNITION_TARGETS_PRESENT7 Register
-[cols=4,options="header"]
-|===
-| Bits | SW Access | Name | Function
-|[7:0] | r | PRESENT_SUMMARY7 | Byte 7 of Ignition Target Present summary
 |===
 
 
